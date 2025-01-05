@@ -1,2 +1,5 @@
 ﻿  test.cpp
-  C++关键字（命名空间）.vcxproj -> E:\计算机\C++\C++入门\C++关键字（命名空间）\x64\Debug\C++关键字（命名空间）.exe
+E:\计算机\C++\C++入门\C_plusplus\C++关键字（命名空间）\C++关键字（命名空间）\test.cpp(149,10): error C2440: “初始化”: 无法从“const int”转换为“int &”
+      E:\计算机\C++\C++入门\C_plusplus\C++关键字（命名空间）\C++关键字（命名空间）\test.cpp(149,10):
+      转换丢失限定符
+  
