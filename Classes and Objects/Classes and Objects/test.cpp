@@ -174,85 +174,246 @@ using std::endl;
 //			4、对象生命周期结束时，C++编译器会自动调用析构函数
 //			5、不同对象的析构函数的先后调用是根据对象进入栈帧中的顺序
 // 3、拷贝构造函数
+// 4、运算符重载--具有特殊函数名的函数，实际上是用来实现自定义类型的比较或运算 
+// 注意：
+//		不能重载不存在的运算发
+//		对于已有的内置运算符不能改变其原本含义
+//		以下五个运算符不能重载：
+//		.*	::	sizeof	?:	.这五个运算符不能重载
 //
+//class Date
+//{
+//public:
+//	// 构造函数（自定义值）
+//	/*Date(int year, int month, int day)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	// 构造函数（默认值）
+//	// 如果在创建对象时不需要确认其参数，就可以利用重载函数的特点，为创建出来的对象设置一个默认值
+//	Date()
+//	{
+//		_year = 0;
+//		_month = 1;
+//		_day = 1;
+//	}*/
+//	// 全缺省的方式定义构造函数
+//	// 注意：
+//	//		无参的构造函数和缺省构造函数不能同时出现，不然会在调用时出现歧义
+//	//		这两个构造函数和编译器自动生成的构造函数被称为是默认构造函数
+//	//		默认构造函数只能有一个
+//	Date(int year = 0, int month = 1, int day = 1)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	// 析构函数
+//	//~Date()
+//	//{
+//	//	cout << "Date()" << endl;
+//	//}
+//
+//	// 拷贝构造函数（他也是构造函数，和普通的构造函数构成重载函数，也会在新创建对象时自动调用）
+//	// 利用引用的方式可以避免这种问题
+//	// 引用的本质就是创建对应的别名而非新的对象
+//	// 显然创建新的对象是需要调用拷贝构造去初始化的，而原先对象已经完成初始化，不需要拷贝构造
+//	// 同时可以看出，调入的d1的地址和d的地址是相同的，这也可以侧面反映出上面结论的正确性
+//	Date(Date& d)
+//	{
+//		_year = d._year;
+//		_month = d._month;
+//		_day = d._day;
+//	}
+//	// 这样调用拷贝构造，将d1传参之后，会在内部重新创建一个新的对象，而这个新对象需要初始化，由于这个新对象是拷贝构造来的，就需要重新再调用拷贝构造
+//	// 对于这个对象又要重新再调用拷贝构造，这样就会形成递归拷贝，导致编译不通过（类似于 套娃）
+//	/*Date(Date d)
+//	{
+//		_year = d._year;
+//		_month = d._month;
+//		_day = d._day;
+//	}*/
+//
+//	// 运算符重载
+//	// d1 == d2
+//	bool operator == (const Date& d)
+//	{
+//		return _year == d._year
+//			&& _month == d._month
+//			&& _day == d._day;
+//	}
+//	// d1 > d2
+//	bool operator > (const Date& d)
+//	{
+//		if (_year > d._year)
+//			return true;
+//		else if (_year == d._year && _month > d._month)
+//			return true;
+//		else if (_year == d._year && _month == d._month && _day > d._day)
+//			return true;
+//
+//		return false;
+//	}
+//
+//	void Init(int year, int month, int day)
+//	{
+//		_year = year;
+//		_month = month;
+//		_day = day;
+//	}
+//	void Print()
+//	{
+//		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//
+//private:
+//	int _year;
+//	int _month;
+//	int _day;
+//};
+//
+//// 运算符重载
+//// 写成全局函数时，会受到成员限定符的限制
+//// 有几个操作数，函数的参数就有多少
+////bool operator == (const Date& d1, const Date& d2)
+////{
+////	return d1._year == d2._year
+////		&& d1._month == d2._month
+////		&& d1._day == d2._day;
+////}
+//
+//int main()
+//{
+//	// 当不传参时，就会默认使用无参数的构造函数
+//	Date d1;
+//	//d1.Print();
+//	d1.Init(2025, 1, 18);
+//	//d1.Print();
+//	
+//	// 传参数时，就会使用有参数的构造函数
+//	// 具体使用根据重载函数的规则来确定
+//	Date d2(2025,1,15);
+//	//d2.Print();
+//
+//	Date d3(d2);
+//	//d3.Print();
+//
+//	cout << (d1 > d2) << endl;	// ->d1.operator == (d2);
+//
+//	return 0;
+//}
+
+
+
+// 实现一个完善的日期类
 class Date
 {
 public:
-	// 构造函数（自定义值）
-	/*Date(int year, int month, int day)
+	int GetMonthDay(int year, int month)
 	{
-		_year = year;
-		_month = month;
-		_day = day;
+		static int monthDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+		if (month == 2 && ((year % 4 == 0 && year % 100 != 0)||year % 400 == 0))
+		{
+			return 29;
+		}
+		return monthDays[month];
 	}
-	// 构造函数（默认值）
-	// 如果在创建对象时不需要确认其参数，就可以利用重载函数的特点，为创建出来的对象设置一个默认值
-	Date()
-	{
-		_year = 0;
-		_month = 1;
-		_day = 1;
-	}*/
-	// 全缺省的方式定义构造函数
-	// 注意：
-	//		无参的构造函数和缺省构造函数不能同时出现，不然会在调用时出现歧义
-	//		这两个构造函数和编译器自动生成的构造函数被称为是默认构造函数
-	//		默认构造函数只能有一个
 	Date(int year = 0, int month = 1, int day = 1)
 	{
-		_year = year;
-		_month = month;
-		_day = day;
+		if (year >= 0 
+			&& month>=1 && month<=12 
+			&& day>=1&& day<=GetMonthDay(year,month))
+		{
+			_year = year;
+			_month = month;
+			_day = day;
+		}
+		else
+		{
+			cout << "非法日期" << endl;
+			return;
+		}
 	}
-	// 析构函数
-	~Date()
-	{
-		cout << "Date()" << endl;
-	}
-
-	// 拷贝构造函数
-	
-	// 这样调用拷贝构造，将d1传参之后，会在内部重新创建一个新的对象，而这个新对象需要初始化，由于这个新对象是拷贝构造来的，就需要重新再调用拷贝构造
-	// 对于这个对象又要重新再调用拷贝构造，这样就会形成递归拷贝，导致编译不通过（类似于 套娃）
-	/*Date(Date d)
+	Date(const Date& d)
 	{
 		_year = d._year;
 		_month = d._month;
 		_day = d._day;
-	}*/
-	void Init(int year, int month, int day)
-	{
-		_year = year;
-		_month = month;
-		_day = day;
 	}
+	inline bool operator == (const Date& d)
+	{
+		return _year == d._year
+			&& _month == d._month
+			&& _day == d._day;
+	}
+	bool operator > (const Date& d)
+	{
+		if (_year > d._year)
+			return true;
+		else if (_year == d._year && _month > d._month)
+			return true;
+		else if (_year == d._year && _month == d._month && _day > d._day)
+			return true;
+	
+		return false;
+	}
+	bool operator>=(const Date& d)
+	{
+		return *this == d || *this > d;
+	}
+	bool operator<(const Date& d)
+	{
+		return !(*this >= d);
+	}
+	bool operator<=(const Date& d)
+	{
+		return *this < d || *this == d;
+	}
+	bool operator!=(const Date& d)
+	{
+		return !(*this == d);
+	}
+
+	Date operator+(int day)
+	{
+		Date ret(*this);
+		ret._day += day;
+		while (ret._day > GetMonthDay(ret._year, ret._month))
+		{
+			ret._day -= GetMonthDay(ret._year, ret._month);
+			ret._month++;
+			if (ret._month == 13)
+			{
+				ret._year++;
+				ret._month = 1;
+			}
+		}
+		return ret;
+	}
+
 	void Print()
 	{
 		cout << _year << "-" << _month << "-" << _day << endl;
 	}
-
 private:
 	int _year;
 	int _month;
 	int _day;
 };
 
+
+
 int main()
 {
-	// 当不传参时，就会默认使用无参数的构造函数
-	Date d1;
+	Date d1(2030,5,29);
 	d1.Print();
-	d1.Init(2025, 1, 15);
-	d1.Print();
-	
-	// 传参数时，就会使用有参数的构造函数
-	// 具体使用根据重载函数的规则来确定
-	Date d2(2025,1,15);
+
+	Date d2(d1);
 	d2.Print();
 
-	Date d3(d2);
-
-
-
+	Date d3 = d1 + 1000;
+	d3.Print();
 	return 0;
 }

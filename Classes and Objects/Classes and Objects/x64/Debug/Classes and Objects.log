@@ -1,7 +1,2 @@
 ﻿  test.cpp
-E:\计算机\C++\C++入门\C_plusplus\Classes and Objects\Classes and Objects\test.cpp(214,2): error C2652: “Date”: 非法的复制构造函数: 第一个参数不应是“Date”
-      E:\计算机\C++\C++入门\C_plusplus\Classes and Objects\Classes and Objects\test.cpp(178,7):
-      参见“Date”的声明
-  
-E:\计算机\C++\C++入门\C_plusplus\Classes and Objects\Classes and Objects\test.cpp(214,2): error C2333: “Date::Date”: 函数声明中有错误；跳过函数体
-E:\计算机\C++\C++入门\C_plusplus\Classes and Objects\Classes and Objects\test.cpp(250,9): error C2558: class“Date”: 没有可用的复制构造函数或复制构造函数声明为“explicit”
+  Classes and Objects.vcxproj -> E:\计算机\C++\C++入门\C_plusplus\Classes and Objects\x64\Debug\Classes and Objects.exe
