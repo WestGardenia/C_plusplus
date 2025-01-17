@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{26270532-FB49-4836-A1B9-F7F57D25A34A}|Classes and Objects\\Classes and Objects.vcxproj|E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{26270532-FB49-4836-A1B9-F7F57D25A34A}|Classes and Objects\\Classes and Objects.vcxproj|solutionrelative:Classes and Objects\\test.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{26270532-FB49-4836-A1B9-F7F57D25A34A}|Classes and Objects\\Classes and Objects.vcxproj|E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\Date_Class.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{26270532-FB49-4836-A1B9-F7F57D25A34A}|Classes and Objects\\Classes and Objects.vcxproj|solutionrelative:Classes and Objects\\Date_Class.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 308,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,13 +50,26 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Date_Class.cpp",
+              "DocumentMoniker": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\Date_Class.cpp",
+              "RelativeDocumentMoniker": "Classes and Objects\\Date_Class.cpp",
+              "ToolTip": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\Date_Class.cpp",
+              "RelativeToolTip": "Classes and Objects\\Date_Class.cpp",
+              "ViewState": "AgIAAIcAAAAAAAAAAAAAAJsAAAAOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-01-17T07:35:57.076Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "test.cpp",
               "DocumentMoniker": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\test.cpp",
               "RelativeDocumentMoniker": "Classes and Objects\\test.cpp",
               "ToolTip": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\Classes and Objects\\Classes and Objects\\test.cpp*",
               "RelativeToolTip": "Classes and Objects\\test.cpp*",
-              "ViewState": "AgIAAIUBAAAAAAAAAAAAAJ8BAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAB4BAAAAAAAAAAAAADUBAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-01-14T01:00:28.847Z",
               "EditorCaption": ""

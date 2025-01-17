@@ -154,7 +154,7 @@ using std::endl;
 
 
 // 
-// 类的默认成员函数
+// 类的默认成员函数(不刻意去写编译器会自动生成）
 // 1、构造函数--在创建对象时，自动调用完成初始化
 //	特点：
 //			1、函数名与类名相同
@@ -180,6 +180,20 @@ using std::endl;
 //		对于已有的内置运算符不能改变其原本含义
 //		以下五个运算符不能重载：
 //		.*	::	sizeof	?:	.这五个运算符不能重载
+//
+// 
+// 5、const修饰成员函数--将成员函数的隐含的this指针的权限缩小，避免出现权限冲突
+//		1、对象调用const成员函数
+// 			const Date* p1->*p1指向的对象
+//			Date const *p1->*p1指向的对象
+//			Date* const p1->p1指针本身
+//		const在*之前就是指针指向的对象
+//		 在*之后就是指针本身
+//		2、成员函数调用const成员函数
+// 
+// 6、取地址及const取地址操作符重载
+//
+
 //
 //class Date
 //{
@@ -263,9 +277,38 @@ using std::endl;
 //		_month = month;
 //		_day = day;
 //	}
-//	void Print()
+//	void Print() const
 //	{
+//		// 成员函数用const修饰之后就不能修改成员变量了
+//		// 因为const修饰保护了*this
 //		cout << _year << "-" << _month << "-" << _day << endl;
+//	}
+//
+//	// 函数调用const成员函数
+//	// 这种调用是允许的
+//	/*void f1()			// void f1(Date* this)
+//	{
+//		f2();			// this->f2(this);
+//	}
+//	void f2() const		// void f2(const Date* this)
+//	{
+//
+//	}
+//	// 这种调用是非const调用const成员函数，不被允许
+//	void f3() const		// void f3(const Date* this)
+//	{
+//		f4();			// this->f4(this);
+//	}
+//	void f4()
+//	{
+//		
+//	}*/
+//
+//	// 取地址函数
+//	const Date* operator&() const
+//	{
+//		//return this;
+//		return nullptr;
 //	}
 //
 //private:
@@ -284,136 +327,37 @@ using std::endl;
 ////		&& d1._day == d2._day;
 ////}
 //
+//void f(const Date& d)
+//{
+//	// 直接调用会出现权限放大的问题，只有用const修饰了对应的成员函数才可以正常调用
+//	d.Print();
+//}
+//
 //int main()
 //{
 //	// 当不传参时，就会默认使用无参数的构造函数
 //	Date d1;
 //	//d1.Print();
 //	d1.Init(2025, 1, 18);
-//	//d1.Print();
+//	d1.Print();
 //	
 //	// 传参数时，就会使用有参数的构造函数
 //	// 具体使用根据重载函数的规则来确定
 //	Date d2(2025,1,15);
 //	//d2.Print();
 //
-//	Date d3(d2);
+//	const Date d3(d2);
 //	//d3.Print();
 //
 //	cout << (d1 > d2) << endl;	// ->d1.operator == (d2);
+//	//f(d3);
+//
+//	cout << &d1 << endl;
+//	cout << &d2 << endl;
+//	cout << &d3 << endl;
 //
 //	return 0;
 //}
 
 
 
-// 实现一个完善的日期类
-class Date
-{
-public:
-	int GetMonthDay(int year, int month)
-	{
-		static int monthDays[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
-		if (month == 2 && ((year % 4 == 0 && year % 100 != 0)||year % 400 == 0))
-		{
-			return 29;
-		}
-		return monthDays[month];
-	}
-	Date(int year = 0, int month = 1, int day = 1)
-	{
-		if (year >= 0 
-			&& month>=1 && month<=12 
-			&& day>=1&& day<=GetMonthDay(year,month))
-		{
-			_year = year;
-			_month = month;
-			_day = day;
-		}
-		else
-		{
-			cout << "非法日期" << endl;
-			return;
-		}
-	}
-	Date(const Date& d)
-	{
-		_year = d._year;
-		_month = d._month;
-		_day = d._day;
-	}
-	inline bool operator == (const Date& d)
-	{
-		return _year == d._year
-			&& _month == d._month
-			&& _day == d._day;
-	}
-	bool operator > (const Date& d)
-	{
-		if (_year > d._year)
-			return true;
-		else if (_year == d._year && _month > d._month)
-			return true;
-		else if (_year == d._year && _month == d._month && _day > d._day)
-			return true;
-	
-		return false;
-	}
-	bool operator>=(const Date& d)
-	{
-		return *this == d || *this > d;
-	}
-	bool operator<(const Date& d)
-	{
-		return !(*this >= d);
-	}
-	bool operator<=(const Date& d)
-	{
-		return *this < d || *this == d;
-	}
-	bool operator!=(const Date& d)
-	{
-		return !(*this == d);
-	}
-
-	Date operator+(int day)
-	{
-		Date ret(*this);
-		ret._day += day;
-		while (ret._day > GetMonthDay(ret._year, ret._month))
-		{
-			ret._day -= GetMonthDay(ret._year, ret._month);
-			ret._month++;
-			if (ret._month == 13)
-			{
-				ret._year++;
-				ret._month = 1;
-			}
-		}
-		return ret;
-	}
-
-	void Print()
-	{
-		cout << _year << "-" << _month << "-" << _day << endl;
-	}
-private:
-	int _year;
-	int _month;
-	int _day;
-};
-
-
-
-int main()
-{
-	Date d1(2030,5,29);
-	d1.Print();
-
-	Date d2(d1);
-	d2.Print();
-
-	Date d3 = d1 + 1000;
-	d3.Print();
-	return 0;
-}
