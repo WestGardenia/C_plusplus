@@ -21,5 +21,8 @@
     <ClCompile Include="Date_Class.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Practise_OJ.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

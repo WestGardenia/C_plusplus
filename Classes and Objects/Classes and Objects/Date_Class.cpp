@@ -39,13 +39,13 @@ public:
 		_month = d._month;
 		_day = d._day;
 	}
-	inline bool operator == (const Date& d)
+	inline bool operator == (const Date& d)	const
 	{
 		return _year == d._year
 			&& _month == d._month
 			&& _day == d._day;
 	}
-	bool operator > (const Date& d)
+	bool operator > (const Date& d)	const
 	{
 		if (_year > d._year)
 			return true;
@@ -56,11 +56,11 @@ public:
 
 		return false;
 	}
-	bool operator>=(const Date& d)
+	bool operator>=(const Date& d)	const
 	{
 		return *this == d || *this > d;
 	}
-	bool operator<(const Date& d)
+	bool operator<(const Date& d)	const
 	{
 		return !(*this >= d);
 	}
