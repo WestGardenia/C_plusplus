@@ -51,11 +51,11 @@ int Sum_1(int n)
 	return (1 + n) * n / 2;
 }
 
-int main()
-{
-	Solution S1;
-	cout << S1.Sum_Solution(115) << endl;
-	cout << S1.Sum_Solution(115) << endl;
-	cout << Sum_1(115) << endl;
-	return 0;
-}
+//int main()
+//{
+//	Solution S1;
+//	cout << S1.Sum_Solution(115) << endl;
+//	cout << S1.Sum_Solution(115) << endl;
+//	cout << Sum_1(115) << endl;
+//	return 0;
+//}

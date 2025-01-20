@@ -1,4 +1,5 @@
 #include<iostream>
+using namespace std;
 using std::cout;
 using std::cin;
 using std::endl;
@@ -202,7 +203,16 @@ using std::endl;
 //		因为静态成员函数没有this指针，不可以突破类域访问限定符
 //		
 //		要访问static静态成员函数，就是要突破两层限制：突破类域+对应访问限定符
-//		
+// 
+// 8、友元--将类的私有成员在类的外部访问的一种方法
+//	  1、友元函数
+//	  2、友元类
+//		主要是为了增强可读性
+//		例如当需要cout将类对象中的内容输出时，需要operator重载运算符
+//		但重载运算符作为类的内部成员函数有一个问题：隐含的this指针会将操作数的顺序打乱
+//		为了增强代码的可读性，就需要将这个函数作为外部函数，加上友元的辅助，就可以实现顺利的输出私有变量
+// 
+// 9、内部类--在一个类的内部再定义一个类
 //
 
 //
@@ -334,9 +344,11 @@ using std::endl;
 //	}
 //
 //private:
-//	int _year;
-//	int _month;
-//	int _day;
+//  // C++11才支持的
+//	// 声明时给缺省值
+//	int _year = 0;
+//	int _month = 1;
+//	int _day = 1;
 //};
 ////
 ////// 运算符重载
@@ -384,5 +396,61 @@ using std::endl;
 //	return 0;
 //}
 
+//
+class Date
+{
+	// 友元函数
+	friend void f(Date& d);
+	friend ostream& operator<<(ostream& out, const Date& d);
+	friend istream& operator>>(istream& in, Date& d);
+	// 友元类
+	friend class Time;
+public:
+	Date(int year, int month, int day)
+	{
+		_year = year;
+		_month = month;
+		_day = day;
+	}
+	void Print()
+	{
+		cout << _year << "-" << _month << "-" << _day << endl;
+	}
+private:
+	int _year = 0;
+	int _month = 1;
+	int _day = 1;
+};
 
+void f(Date& d)
+{
+	d._year = 10;
+	cout << d._year << endl;
+}
+
+// cout -> osteram
+// cin  -> istream
+
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year << "/" << d._month << "/" << d._day << endl;
+	// 为了使重载的<<符号具有连续输出的能力，需要将out对象作为返回值返回到原输出式中
+	return out;
+}
+
+istream& operator>>(istream& in, Date& d)
+{
+	in >> d._year >> d._month >> d._day;
+	return in;
+}
+int main()
+{
+	Date d1(2025,1,5);
+	Date d2(2025,2,5);
+	d1.Print();
+	f(d1);
+	cin >> d1 >> d2;
+	cout << d1<<d2;
+	return 0;
+}
 
