@@ -5,6 +5,10 @@
     {
       "AbsoluteMoniker": "D:0:0:{1044EE2B-A23D-4BBF-BE4E-5354C63BEF9F}|STL_string\\STL_string.vcxproj|E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\STL_string.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{1044EE2B-A23D-4BBF-BE4E-5354C63BEF9F}|STL_string\\STL_string.vcxproj|solutionrelative:STL_string\\STL_string.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1044EE2B-A23D-4BBF-BE4E-5354C63BEF9F}|STL_string\\STL_string.vcxproj|E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\string_LeetCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{1044EE2B-A23D-4BBF-BE4E-5354C63BEF9F}|STL_string\\STL_string.vcxproj|solutionrelative:STL_string\\string_LeetCode.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +18,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 308,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,13 +50,26 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "string_LeetCode.cpp",
+              "DocumentMoniker": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\string_LeetCode.cpp",
+              "RelativeDocumentMoniker": "STL_string\\string_LeetCode.cpp",
+              "ToolTip": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\string_LeetCode.cpp",
+              "RelativeToolTip": "STL_string\\string_LeetCode.cpp",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAABMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2025-03-25T11:54:21.617Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
               "Title": "STL_string.cpp",
               "DocumentMoniker": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\STL_string.cpp",
               "RelativeDocumentMoniker": "STL_string\\STL_string.cpp",
               "ToolTip": "E:\\\u8BA1\u7B97\u673A\\C\u002B\u002B\\C\u002B\u002B\u5165\u95E8\\C_plusplus\\STL_string\\STL_string\\STL_string.cpp",
               "RelativeToolTip": "STL_string\\STL_string.cpp",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAAEcAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAP0AAAAAAAAAAAAuwBIBAAAXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-03-23T12:48:39.282Z",
               "EditorCaption": ""
