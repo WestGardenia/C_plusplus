@@ -286,18 +286,40 @@ void test_string8()
 		cout << s3.substr(pos3) << endl;
 	}
 
+	// https://account.chsi.com.cn/account/account!show.action
+	string url("https://account.chsi.com.cn/account/account!show.action");
+	// 分离出网址的 协议、域名、资源名称
+	size_t i1 = url.find(':');	// 找到协议后的':'
+	if (i1 != url.npos)
+	{
+		cout << "协议：" << url.substr(0, i1) << endl;
+	}
 
+	size_t i2 = url.find('/', i1 + 3);
+	if (i2 != url.npos)
+	{
+		cout << "域名：" << url.substr(i1 + 3, i2 - (i1 + 3)) << endl;
+	}
+	cout << "资源：" << url.substr(i2 + 1, url.npos);
 }
 
-int main()
+void test_string9()
 {
-	// test_string1();
-	// test_string2();
-	// test_string3();
-	// test_string4();
-	// test_string5();
-	// test_string6();
-	// test_string7();
-	test_string8();
-	return 0;
+	string s1("abcd");
+	string s2("efgh");
+	cout << (s1 < "aaaa") << endl;
 }
+
+//int main()
+//{
+//	// test_string1();
+//	// test_string2();
+//	// test_string3();
+//	// test_string4();
+//	// test_string5();
+//	// test_string6();
+//	// test_string7();
+//	// test_string8();
+//	test_string9();
+//	return 0;
+//}

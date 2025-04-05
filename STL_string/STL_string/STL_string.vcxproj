@@ -129,6 +129,10 @@
   <ItemGroup>
     <ClCompile Include="STL_string.cpp" />
     <ClCompile Include="string_LeetCode.cpp" />
+    <ClCompile Include="test.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="string.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
