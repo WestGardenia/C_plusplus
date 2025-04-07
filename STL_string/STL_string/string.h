@@ -125,6 +125,39 @@ namespace Dawn
 			_str = new char[_capacity + 1];
 			strcpy(_str, str);
 		}
+		// 拷贝构造
+		// 1、传统写法
+		string(const string& s)
+		{
+			_str = new char[strlen(s._str) + 1];
+			strcpy(_str, s._str);
+		}
+		// 2、现代写法
+		// 本质上就是将拷贝的逻辑外包给构造函数去实现
+		string(const string& s)
+			:_str(nullptr)
+			,_size(0)
+			,_capacity(0)
+		{
+			// 先利用被拷贝的string中的字符串创建一个新的string对象
+			string tmp(s._str);
+			// 再将两者的_str交换
+			// 但由于新创建的s2中的_str是随机值，所以要先将其置为空
+			swap(tmp);
+		}
+		void swap(string& s)
+		{
+			// 要加上域作用限定符
+			// 直接写swap会优先调用自己写的swap(string& s)
+			::swap(_str, s._str);
+			::swap(_size, s._size);
+			::swap(_capacity, s._capacity);
+		}
+		string& operator=(string s)
+		{
+			swap(s);
+			return *this;
+		}
 		~string()
 		{
 			delete[] _str;
@@ -169,9 +202,26 @@ namespace Dawn
 			}
 		}
 
-		void resize(size_t n, char ch)
+		void resize(size_t n, char ch = '\0')
 		{
-
+			if (n < _size)
+			{
+				_str[n] = '\0';
+				_size = n;
+			}
+			else
+			{
+				if (n > _capacity)
+				{
+					reserve(n);
+				}
+				for (size_t i = _size; i < n; i++)
+				{
+					_str[i] = ch;
+				}
+				_size = n;
+				_str[_size] = '\0';
+			}
 		}
 
 		void push_back(char ch)
@@ -220,7 +270,7 @@ namespace Dawn
 				reserve(newcapacity);
 			}
 			size_t end = _size;
-			while (end >= pos)
+			while (end >= (int)pos)
 			{
 				_str[end + 1] = _str[end];
 				end--;
@@ -234,7 +284,7 @@ namespace Dawn
 		string& insert(size_t pos, const char* str)
 		{
 			assert(pos <= _size);
-			int str_end = strlen(str);
+			size_t str_end = strlen(str);
 			// 扩容
 			if (_size + str_end > _capacity)
 			{
@@ -242,8 +292,8 @@ namespace Dawn
 				reserve(newcapacity);
 			}
 			// 挪动数据
-			int end = _size;
-			while (end > pos)
+			size_t end = _size;
+			while (end >= (int)pos)
 			{
 				_str[end + str_end] = _str[end];
 				end--;
@@ -259,19 +309,76 @@ namespace Dawn
 
 			return *this;
 		}
-		void erase(size_t pos,size_t len = npos);
-		size_t find(char ch, size_t pos = 0);
-		size_t find(const char* str, size_t pos = 0);
+		void erase(size_t pos, size_t len = npos)
+		{
+			// 删除pos之后的len个字符
+			assert(pos < _size);
+			if (len >= _size - pos)
+			{
+				_str[pos] = '\0';
+				_size = pos;
+			}
+			else
+			{
+				size_t i = pos + len;
+				while (i <= _size)
+				{
+					_str[i - len] = _str[i];
+					i++;
+				}
+				_size -= len;
+			}
+		}
+		size_t find(char ch, size_t pos = 0)
+		{
+			size_t i = pos;
+			while (i< _size)
+			{
+				if (_str[i] == ch)
+				{
+					return i;
+				}
+				i++;
+			}
+			return npos;
+		}
+		size_t find(const char* str, size_t pos = 0)
+		{
+			// strstr子串匹配函数（KMP算法）
+			char* p = strstr(_str, str);
+			if (p == nullptr)
+			{
+				return npos;
+			}
+			return p - _str;
+		}
 
-		bool operator>(const char* str);
-		bool operator>=(const char* str);
-		bool operator<(const char* str);
-		bool operator<=(const char* str);
-		bool operator==(const char* str);
+		bool operator>(const string& str)
+		{
+			int ret = strcmp(_str, str._str);
+			return  ret > 0;
+		}
+		bool operator==(const string& str)
+		{
+			int ret = strcmp(_str, str._str);
+			return  ret == 0;
+		}
+		bool operator<(const string& str)
+		{
+			return !(*this > str);
+		}
+		bool operator<=(const string& str)
+		{
+			return *this < str || *this == str;
+		}
+		bool operator>=(const string& str)
+		{
+			return  *this > str || *this == str;
+		}
 
 	private:
 		char* _str;
-		static size_t npos;
+		static const size_t npos = -1;
 		size_t _size;		// 已有的字符串中字符数量
 		size_t _capacity;	// 当前字符串的最大可容纳有效字符数量，不包括'\0'
 	};
@@ -283,6 +390,27 @@ namespace Dawn
 			out << s[i];
 		}
 		return out;
+	}
+
+	istream& operator >> (istream& in, string& s)
+	{
+		while (1)
+		{
+			char ch;
+			//in >> ch;
+			// 这里不能直接用系统给的输入流
+			// 系统给的输入流会将输入的字符打入缓冲区，而缓冲区会自动认为空格和换行是用户一次输入的停止标识，所以缓冲区不会接受得到换行符和空格
+			ch = in.get();
+			if (ch == '\n' || ch == ' ')
+			{
+				break;
+			}
+			else
+			{
+				s += ch;
+			}
+		}
+		return in;
 	}
 
 	void test_string1()
@@ -342,6 +470,35 @@ namespace Dawn
 		string s("hello");
 		char str[] = " world";
 		s = s.insert(s.size(), str);
+		cout << s << endl;
+
+		cout << s.size() << endl;
+		cout << s.capacity() << endl << endl;
+
+		string s2("hello");
+		s2.resize(18, 'x');
+		cout << s2 << endl;
+		cout << s2.size() << endl;
+		cout << s2.capacity() << endl << endl;
+
+		string s3("hello");
+		s3.resize(8);
+		cout << s3 << endl;
+		cout << s3.size() << endl;
+		cout << s3.capacity() << endl<<endl;
+		
+		s2.erase(2, 26);
+		cout << s2 << endl;
+
+		string s4("abcdefg");
+		cout << s4.find("cdex") << endl;
+		cout << s4.find("cde") << endl;
+	}
+
+	void test_string4()
+	{
+		string s;
+		cin >> s;
 		cout << s << endl;
 	}
 }

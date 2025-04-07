@@ -1,8 +1,2 @@
 ﻿  test.cpp
-E:\计算机\C++\C++入门\C_plusplus\STL_string\STL_string\string.h(237,16): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  (编译源文件“test.cpp”)
-  
-E:\计算机\C++\C++入门\C_plusplus\STL_string\STL_string\string.h(245,12): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-  (编译源文件“test.cpp”)
-  
   STL_string.vcxproj -> E:\计算机\C++\C++入门\C_plusplus\STL_string\x64\Debug\STL_string.exe
